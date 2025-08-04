@@ -16,5 +16,10 @@ public class Controller {
     public ResponseEntity<String> hello(){
         return new ResponseEntity<>("hello", HttpStatus.OK);
     }
+
+    @GetMapping("/teste")
+    public ResponseEntity<String> teste(){
+        return new ResponseEntity<>("teste", HttpStatus.OK);
+    }
     
 }
