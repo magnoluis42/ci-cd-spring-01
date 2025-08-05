@@ -1,0 +1,2 @@
+name: ci-spring-01
+on: [push]
