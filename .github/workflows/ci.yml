@@ -1,0 +1,43 @@
+# name: ci-spring-workflow
+# on: [push]
+# jobs:
+#   check-application:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v2
+#       - uses: actions/setup-java@v2
+
+# Nome do seu workflow
+name: CI Spring Boot com Maven
+
+# Gatilho: executa em todo push para as branches main e develop, e em pull requests
+on:
+  push:
+    branches: [ main, Desenvolvimento ]
+  pull_request:
+    branches: [ main, Desenvolvimento ]
+
+jobs:
+  # Nome do job
+  build-and-test:
+    # Máquina virtual onde o job vai rodar
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Clona o seu repositório para a máquina virtual
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      # 2. Configura o ambiente Java (JDK)
+      - name: Configurar JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin' # Uma distribuição popular e gratuita do OpenJDK
+          cache: 'maven'         # Ativa o cache para as dependências do Maven
+
+      # 3. Executa o build e os testes com o Maven Wrapper
+      # O 'mvnw' é o script do Maven Wrapper que deve estar no seu projeto.
+      # O comando 'clean package' limpa, compila, executa os testes e empacota o projeto em um .jar
+      - name: Build e Teste com Maven
+        run: ./mvnw clean package
